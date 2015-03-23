@@ -1,8 +1,9 @@
 
-var Task = function(taskArgument) {
+var Task = function(todoList, taskArgument) {
   this.id = Task._LAST_TASK_ID++;
   this.description = taskArgument;
   this.completed = false;
+  this.todoList = todoList;
 };
 
 Task._LAST_TASK_ID = 0;
@@ -17,13 +18,18 @@ var TodoList = function() {
 
 
 TodoList.prototype.add = function(task){
-  this.tasks.push(new Task(task));
+  this.tasks.push(new Task(this, task));
 };
 
 TodoList.prototype.list = function(){
   for (var i=0; i < this.tasks.length; i++){
     console.log(this.tasks[i]);
   }
+};
+
+TodoList.prototype.remove = function (task){
+  var index = this.tasks.indexOf(task);
+  this.tasks.splice(index, 1);
 };
 
 // NEED TO COME BACK TO THIS WITH HELP :)
@@ -33,6 +39,10 @@ TodoList.prototype.list = function(){
 //   TodoList.tasks.splice(index, 1);
 //   // TodoList.tasks.splice(this.id, 1);
 // };
+
+Task.prototype.remove = function(){
+  this.todoList.remove(this);
+};
 
 // Driver code
 // Note we are using a JavaScript constructor now.
