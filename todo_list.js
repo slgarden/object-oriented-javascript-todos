@@ -29,22 +29,27 @@ TodoList.prototype.complete = function(task) {
   task.complete();
 };
 
-var Task = function(description) {
+var Task = function(description, todolist) {
   this.id = null;
   this.description = description;
   this.completed = false;
+  this.todolist = todolist;
 };
 
 Task.prototype.complete = function(){
   this.completed = true;
 };
 
+Task.prototype.remove = function() {
+  this.todolist.remove(this);
+}
+
 // Driver code
 
 
 var list1 = new TodoList;
-var task1 = new Task('go to the store');
-var task2 = new Task('eat');
+var task1 = new Task('go to the store', list1);
+var task2 = new Task('eat', list1);
 console.log(list1.add(task1));
 console.log(list1.add(task2));
 console.log(list1.tasks);
